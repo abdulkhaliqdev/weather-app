@@ -1,11 +1,24 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
 import './style.css';
 import Header from './header';
 
 const main = document.createElement('div');
 main.setAttribute('id', 'main');
-async function getdata(location) {
+
+const KtoC = (temp) => (temp - 273.15).toFixed(2);
+
+const changeBackground = (data) => {
+  if (data.weather[0].main === 'Clear') {
+    document.body.setAttribute('class', 'Sunny');
+  } else if (data.weather[0].main === 'Clouds') {
+    document.body.setAttribute('class', 'Clouds');
+  } else if (data.weather[0].main === 'Snow') {
+    document.body.setAttribute('class', 'Snow');
+  } else if (data.weather[0].main === 'Rain') {
+    document.body.setAttribute('class', 'Rain');
+  }
+};
+
+const getdata = async (location) => {
   if ((typeof (document.getElementById('weather')) !== 'undefined') && (document.getElementById('weather') !== null)) {
     document.getElementById('weather').remove();
   }
@@ -27,25 +40,13 @@ async function getdata(location) {
     <small>${data.weather[0].main}</small>
     </div>
     `;
-    if (data.weather[0].main === 'Clear') {
-      document.body.setAttribute('class', 'Sunny');
-    } else if (data.weather[0].main === 'Clouds') {
-      document.body.setAttribute('class', 'Clouds');
-    } else if (data.weather[0].main === 'Snow') {
-      document.body.setAttribute('class', 'Snow');
-    } else if (data.weather[0].main === 'Rain') {
-      document.body.setAttribute('class', 'Rain');
-    }
+    changeBackground(data);
   }
 
   main.appendChild(weather);
-}
+};
 
-function KtoC(temp) {
-  return (temp - 273.15).toFixed(2);
-}
-
-function DisplayWeather(data) {
+const DisplayWeather = () => {
   const form = document.createElement('div');
   form.setAttribute('id', 'form');
   const input = document.createElement('input');
@@ -74,7 +75,7 @@ function DisplayWeather(data) {
 
   main.appendChild(document.body.appendChild(form));
   getdata('london');
-}
+};
 
 document.body.appendChild(Header());
 document.body.appendChild(main);
