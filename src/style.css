@@ -35,6 +35,7 @@ header {
   padding: 10%;
   border-radius: 9px;
   display: flex;
+  justify-content: center;
 }
 
 #search {

@@ -35,12 +35,12 @@ const eventToggleButton = () => {
     const targetDiv = e.target;
     const toggle = document.getElementById('toggle_slider');
     if (targetDiv.checked !== null && targetDiv.checked === true) {
-      toggle.setAttribute('class', 'slider2');
       document.getElementById('weather').remove();
+      toggle.setAttribute('class', 'slider2');
       changeData(location, 'F');
     } else {
-      toggle.setAttribute('class', 'slider');
       document.getElementById('weather').remove();
+      toggle.setAttribute('class', 'slider');
       changeData(location, 'C');
     }
   });
@@ -57,7 +57,7 @@ const getdata = async (location, toggle = 'C') => {
   const weather = document.createElement('div');
   weather.setAttribute('id', 'weather');
   weather.classList.add('weather');
-  if (respon.status === 404) {
+  if (respon.status === 404 || respon.status === 400) {
     weather.innerHTML = '<h2 class=\'card\'>Location Not Found! Enter Valid Location</h2>';
     document.body.setAttribute('class', 'unknown_location');
   } else {
@@ -106,7 +106,7 @@ const DisplayWeather = () => {
   form.appendChild(toggle);
   form.appendChild(submit);
   submit.addEventListener('click', (e) => {
-    if (((e.target.tagName === 'INPUT' && e.target.type !== 'search' && document.getElementById('search').value !== '') || (e.target.type !== 'checkbox')) || e.Keycode === 13
+    if (((e.target.tagName === 'INPUT' && e.target.type !== 'search' && document.getElementById('search').value === '') || (e.target.type !== 'checkbox')) || e.Keycode === 13
     ) {
       const toggle = document.getElementById('toggle');
       const search = document.getElementById('search');
